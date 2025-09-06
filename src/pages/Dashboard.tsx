@@ -14,6 +14,7 @@ import { ProjectTemplates } from '@/components/templates/ProjectTemplates';
 import { RealtimeCollaboration } from '@/components/realtime/RealtimeCollaboration';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { User } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
   const { user, loading } = useAuth();
