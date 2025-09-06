@@ -170,7 +170,7 @@ export const KanbanBoard: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-6 md:p-8 lg:p-10">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

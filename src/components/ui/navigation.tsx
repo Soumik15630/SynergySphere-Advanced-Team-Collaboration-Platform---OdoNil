@@ -27,13 +27,13 @@ interface NavigationProps {
 }
 
 const navigationItems = [
-  { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { id: 'overview', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'projects', label: 'Projects', icon: Folder },
   { id: 'tasks', label: 'Tasks', icon: CheckSquare },
   { id: 'kanban', label: 'Kanban Board', icon: FolderKanban },
   { id: 'teams', label: 'Teams', icon: Users },
   { id: 'messages', label: 'Messages', icon: MessageSquare },
-  { id: 'settings', label: 'Profile', icon: Settings },
+  { id: 'profile', label: 'Profile', icon: User },
 ];
 
 const MobileNav: React.FC<{

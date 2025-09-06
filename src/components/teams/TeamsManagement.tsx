@@ -61,7 +61,7 @@ export const TeamsManagement: React.FC = () => {
       const { data, error } = await supabase
         .from('projects')
         .select('*')
-        .eq('owner_id', user?.id);
+        .or(`owner_id.eq.${user?.id},id.in.(${await getUserProjectIds()})`);
 
       if (error) throw error;
       setProjects(data || []);
@@ -78,6 +78,15 @@ export const TeamsManagement: React.FC = () => {
     }
   };
 
+  const getUserProjectIds = async () => {
+      const { data } = await supabase
+        .from('project_members')
+        .select('project_id')
+        .eq('user_id', user?.id);
+      
+      return data?.map(m => m.project_id).join(',') || '';
+  };
+
   const fetchMembers = async () => {
     try {
       setLoading(true);
@@ -92,7 +101,7 @@ export const TeamsManagement: React.FC = () => {
           )
         `)
         .eq('project_id', selectedProject);
-
+      console.log(data);
       if (error) throw error;
       setMembers((data as any) || []);
     } catch (error) {
@@ -196,8 +205,13 @@ export const TeamsManagement: React.FC = () => {
     }
   };
 
+  const extractName = (name: string) => {
+    const resultArray = name.split('@');
+    return resultArray[0];
+  }
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-6 md:p-8 lg:p-10">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Team Management</h1>
@@ -310,7 +324,7 @@ export const TeamsManagement: React.FC = () => {
                     </Avatar>
                     <div>
                       <p className="font-medium">
-                        {member.profiles?.name || 'Unknown User'}
+                        {extractName(member?.profiles?.email) || 'Unknown User'}
                       </p>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Mail className="w-3 h-3" />
