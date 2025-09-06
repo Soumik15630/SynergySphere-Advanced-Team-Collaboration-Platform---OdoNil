@@ -146,11 +146,11 @@ export const DashboardOverview: React.FC = () => {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-6 md:p-8 lg:p-10">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
-        <p className="text-muted-foreground">Welcome back! Here's what's happening with your projects.</p>
+      <div className="space-y-2">
+        <h1 className="text-4xl font-bold tracking-tight">Dashboard</h1>
+        <p className="text-lg text-muted-foreground">Welcome back! Here's what's happening with your projects.</p>
       </div>
 
       {/* Statistics Cards */}
@@ -163,18 +163,20 @@ export const DashboardOverview: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="card-feature"
+              className="card-feature group"
             >
               <div className="flex items-center justify-between mb-4">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <Icon className="w-5 h-5 text-primary" />
+                <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                  <Icon className="w-6 h-6 text-primary" />
                 </div>
-                <TrendingUp className="w-4 h-4 text-success" />
+                <div className="flex items-center gap-1 bg-success/10 text-success px-2 py-1 rounded-lg">
+                  <TrendingUp className="w-3 h-3" />
+                  <span className="text-xs font-medium">{stat.change}</span>
+                </div>
               </div>
               <div>
-                <p className="text-2xl font-bold mb-1">{stat.value}</p>
-                <p className="text-sm text-muted-foreground mb-2">{stat.label}</p>
-                <p className="text-xs text-success">{stat.change}</p>
+                <h3 className="text-2xl font-bold tracking-tight mb-1">{stat.value}</h3>
+                <p className="text-sm text-muted-foreground">{stat.label}</p>
               </div>
             </motion.div>
           );

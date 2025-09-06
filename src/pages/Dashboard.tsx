@@ -13,12 +13,14 @@ import { TimeTracker } from '@/components/timetracking/TimeTracker';
 import { ProjectTemplates } from '@/components/templates/ProjectTemplates';
 import { RealtimeCollaboration } from '@/components/realtime/RealtimeCollaboration';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 const Dashboard: React.FC = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
   const [currentView, setCurrentView] = useState('overview');
   const [selectedProject, setSelectedProject] = useState<string | undefined>(undefined);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -68,21 +70,34 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen">
       {/* Sidebar Navigation */}
       <Navigation 
         currentView={currentView} 
         onViewChange={setCurrentView}
+        onCollapsedChange={setIsSidebarCollapsed}
       />
 
       {/* Main Content */}
       <motion.main 
-        className="flex-1 p-8 overflow-auto"
+        className={cn(
+          "min-h-screen bg-background/50 transition-all duration-200 ease-in-out",
+          isSidebarCollapsed
+            ? "ml-0 md:ml-[80px]"
+            : "ml-0 md:ml-64",
+        )}
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3 }}
       >
-        {renderCurrentView()}
+        <div className={cn(
+          "mx-auto transition-all duration-200",
+          isSidebarCollapsed
+            ? "max-w-[1800px] px-4 md:px-8 lg:px-12"
+            : "max-w-[1600px] px-4 md:px-6 lg:px-8"
+        )}>
+          {renderCurrentView()}
+        </div>
       </motion.main>
     </div>
   );
