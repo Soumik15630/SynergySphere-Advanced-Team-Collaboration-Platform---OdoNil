@@ -58,7 +58,13 @@ const Message = ({ projectId, userId }) => {
         // Fetch the complete message with profile data
         const { data } = await supabase
           .from('project_messages')
-          .select(`*`)
+          .select(`
+            *,
+            profiles:user_id (
+              name,
+              email
+            )
+          `)
           .eq('id', payload.new.id)
           .single();
         
