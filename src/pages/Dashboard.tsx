@@ -15,6 +15,8 @@ import { RealtimeCollaboration } from '@/components/realtime/RealtimeCollaborati
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { User } from 'lucide-react';
+import { Message } from '@/components/messaging/message';
+import TeamChatContainer from '@/components/messaging/TeamChatContainer';
 
 const Dashboard: React.FC = () => {
   const { user, loading } = useAuth();
@@ -64,7 +66,7 @@ const Dashboard: React.FC = () => {
       case 'profile':
         return <UserProfile />;
       case 'messages':
-        return <div className="text-center py-8 text-muted-foreground">Messages feature coming soon...</div>;
+        return <TeamChatContainer user={user}/>
       default:
         return <DashboardOverview />;
     }
